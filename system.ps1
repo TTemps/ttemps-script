@@ -68,6 +68,11 @@ try {
     Enable-NetAdapter -Name "Ethernet" -Confirm:$false
     $output = "Ethernet card enabled"
 }
+try {
+    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "ais2024"
+} catch {
+    $output = "Error adding 'ais2024' to Remote Desktop Users group"
+}
 catch {
     $output = "Error enabling Ethernet card"
 }
