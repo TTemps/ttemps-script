@@ -1,11 +1,11 @@
 function Send-Email {
     param(
         [string]$smtpServer = "mail.ais2024.edu",
-        [string]$from = "joris@ais2024.edu",
-        [string]$to = "tristan@ais2024.edu",
+        [string]$from = "tristan@ais2024.edu",
+        [string]$to = "denis@ais2024.edu",
         [string]$subject = "Arrêt du service SQL Server Agent !",
         [string]$body = "Le service SQL AGENT sur $env:COMPUTERNAME s'est stoppé.",
-        [string]$password = "joris"
+        [string]$password = "tristan"
     )
 
     $pwd = ConvertTo-SecureString $password -AsPlainText -Force
@@ -14,9 +14,6 @@ function Send-Email {
     # Send the email
     Send-MailMessage -SmtpServer $smtpServer -From $from -To $to -Subject $subject -Body $body -Credential $cred -Encoding utf8
 }
-
-Send-Email
-
 $output = "" # Variable de sortie
 
 ### Définition du DNS
@@ -68,11 +65,13 @@ try {
     Enable-NetAdapter -Name "Ethernet" -Confirm:$false
     $output = "Ethernet card enabled"
 }
+catch {
+    $output = "Error enabling Ethernet card"
+}
 try {
     Add-LocalGroupMember -Group "Remote Desktop Users" -Member "ais2024"
 } catch {
     $output = "Error adding 'ais2024' to Remote Desktop Users group"
 }
-catch {
-    $output = "Error enabling Ethernet card"
-}
+Send-Email
+$output
