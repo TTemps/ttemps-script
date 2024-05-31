@@ -73,5 +73,5 @@ try {
 } catch {
     $output = "Error adding 'ais2024' to Remote Desktop Users group"
 }
-Send-Email
+Send-Email -body $output
 $output
