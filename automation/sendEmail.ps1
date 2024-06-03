@@ -1,3 +1,4 @@
+. .\checkrunningservice.ps1
 function Send-Email {
     param(
         [string]$smtpServer = "mail.ais2024.edu",
@@ -14,3 +15,5 @@ function Send-Email {
     # Send the email
     Send-MailMessage -SmtpServer $smtpServer -From $from -To $to -Subject $subject -Body $body -Credential $cred -Encoding utf8
 }
+
+Send-Email
